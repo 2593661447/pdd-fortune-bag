@@ -346,7 +346,7 @@
         function renderShares() {
             var today = new Date().toISOString().split('T')[0];
             var todayShares = allShares.filter(function(s) {
-                return new Date(s.createdAt).toISOString().split('T')[0] === today && s.status !== 'expired';
+                return new Date(s.createdAt).toISOString().split('T')[0] === today && s.status === 'pending';
             });
 
             if (todayShares.length === 0) {
@@ -445,6 +445,10 @@
             navigator.clipboard.writeText(picked.code).then(function() {
                 db.ref('shares/' + picked.id).update({ status: 'copied' });
                 showToast('智能直达：已复制 ' + picked.code + ' 到剪贴板！');
+                setTimeout(function() {
+                    smartBtn.disabled = false;
+                    smartBtn.innerHTML = '<i class="fas fa-bolt"></i> 智能直达';
+                }, 500);
             }).catch(function(err) {
                 showToast('复制失败: ' + err.message, 'error');
                 smartBtn.disabled = false;
