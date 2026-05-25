@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase 连接测试</title>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        #status { padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .connected { background: #d4edda; color: #155724; }
+        .disconnected { background: #f8d7da; color: #721c24; }
+        #log { background: #f8f9fa; padding: 10px; border: 1px solid #ddd; height: 200px; overflow-y: auto; }
+    </style>
+</head>
+<body>
+    <h2>Firebase 连接测试</h2>
+    <div id="status" class="disconnected">连接中...</div>
+    <button onclick="testWrite()">测试写入数据</button>
+    <button onclick="testRead()">测试读取数据</button>
+    <div id="log"></div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCWVH_Bt_gYKFa9KqxyNRaqNtNooqOmuhk",
+            authDomain: "pdd-fortune-bag.firebaseapp.com",
+            databaseURL: "https://pdd-fortune-bag-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "pdd-fortune-bag",
+            storageBucket: "pdd-fortune-bag.firebasestorage.app",
+            messagingSenderId: "1076733344090",
+            appId: "1:1076733344090:web:23ea8f1d399689dbf95b63"
+        };
+
+        const log = document.getElementById('log');
+        const status = document.getElementById('status');
+
+        function addLog(msg) {
+            const time = new Date().toLocaleTimeString();
+            log.innerHTML += `[${time}] ${msg}<br>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        try {
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.database();
+            addLog('Firebase 初始化成功');
+
+            // 监听连接状态
+            db.ref('.info/connected').on('value', (snap) => {
+                if (snap.val() === true) {
+                    status.textContent = '✅ 已连接到 Firebase';
+                    status.className = 'status connected';
+                    addLog('连接状态：已连接');
+                } else {
+                    status.textContent = '❌ 连接断开';
+                    status.className = 'status disconnected';
+                    addLog('连接状态：断开');
+                }
+            });
+
+            // 监听错误
+            db.ref('.info/connected').on('error', (err) => {
+                addLog(`连接错误: ${err.message}`);
+            });
+
+            window.testWrite = function() {
+                addLog('尝试写入测试数据...');
+                db.ref('test').set({
+                    timestamp: Date.now(),
+                    message: '测试连接'
+                }).then(() => {
+                    addLog('✅ 写入成功');
+                }).catch(err => {
+                    addLog(`❌ 写入失败: ${err.message}`);
+                });
+            };
+
+            window.testRead = function() {
+                addLog('尝试读取测试数据...');
+                db.ref('test').once('value').then(snap => {
+                    const val = snap.val();
+                    addLog(`✅ 读取成功: ${JSON.stringify(val)}`);
+                }).catch(err => {
+                    addLog(`❌ 读取失败: ${err.message}`);
+                });
+            };
+
+        } catch (err) {
+            addLog(`❌ Firebase 初始化失败: ${err.message}`);
+        }
+    </script>
+</body>
+</html>

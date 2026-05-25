@@ -33,7 +33,6 @@
             --spacing-xl: 32px;
             --spacing-2xl: 48px;
         }
-
         @media (prefers-color-scheme: dark) {
             :root {
                 --text-primary: #f5f5f7;
@@ -47,177 +46,94 @@
                 --shadow-hover: 0 8px 30px rgba(0,0,0,0.4);
             }
         }
-
         * { margin:0; padding:0; box-sizing:border-box; }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #fff5f5 0%, #fff9f0 100%);
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
         }
-
         @media (prefers-color-scheme: dark) {
             body { background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); }
         }
-
         .container { max-width:1200px; margin:0 auto; padding:var(--spacing-lg); }
-
         .header { text-align:center; margin-bottom:var(--spacing-2xl); padding-top:var(--spacing-xl); }
-
         .logo { display:flex; align-items:center; justify-content:center; gap:var(--spacing-sm); margin-bottom:var(--spacing-md); }
-
         .logo-icon { color:var(--primary); font-size:2.5rem; }
-
         .logo-text {
             font-size:2.5rem; font-weight:700;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
         }
-
         .tagline { color:var(--text-secondary); font-size:1.1rem; max-width:600px; margin:0 auto; }
-
-        .stats-container {
-            display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-            gap:var(--spacing-lg); margin-bottom:var(--spacing-2xl);
-        }
-
-        .stat-card {
-            background:var(--surface-primary); border-radius:var(--radius-lg);
-            padding:var(--spacing-xl); box-shadow:var(--shadow);
-            transition:transform 0.3s ease, box-shadow 0.3s ease; border:1px solid var(--border);
-        }
-
-        .stat-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-hover); }
-        .stat-card.publish { border-top:4px solid var(--primary); }
-        .stat-card.copied { border-top:4px solid var(--success); }
-
-        .stat-icon { font-size:2rem; margin-bottom:var(--spacing-md); color:var(--text-tertiary); }
-        .stat-card.publish .stat-icon { color:var(--primary); }
-        .stat-card.copied .stat-icon { color:var(--success); }
-
-        .stat-value { font-size:3rem; font-weight:700; line-height:1; margin-bottom:var(--spacing-xs); }
-        .stat-label { color:var(--text-secondary); font-size:1rem; }
 
         .publish-section, .shares-section {
             background:var(--surface-primary); border-radius:var(--radius-lg);
             padding:var(--spacing-xl); box-shadow:var(--shadow);
             margin-bottom:var(--spacing-2xl); border:1px solid var(--border);
         }
-
         .section-title { font-size:1.5rem; font-weight:600; margin-bottom:var(--spacing-lg); display:flex; align-items:center; gap:var(--spacing-sm); }
         .section-title i { color:var(--primary); }
-
         .input-group { display:flex; gap:var(--spacing-md); margin-bottom:var(--spacing-md); }
-
         @media (max-width:768px) { .input-group { flex-direction:column; } }
-
         .share-input {
             flex:1; padding:var(--spacing-lg); border:2px solid var(--border);
             border-radius:var(--radius-md); font-size:1.1rem;
-            transition:all 0.2s ease; background:var(--surface-primary); color:var(--text-primary);
+            background:var(--surface-primary); color:var(--text-primary);
+            transition:all 0.2s ease;
         }
-
         .share-input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(255,59,48,0.1); }
         .share-input::placeholder { color:var(--text-tertiary); }
-
         .publish-btn {
             padding:var(--spacing-lg) var(--spacing-xl);
-            background:linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color:white; border:none; border-radius:var(--radius-md);
+            background:var(--primary); color:white; border:none; border-radius:var(--radius-md);
             font-size:1.1rem; font-weight:600; cursor:pointer;
-            transition:all 0.2s ease; display:flex; align-items:center; gap:var(--spacing-sm); white-space:nowrap;
+            transition:all 0.2s ease; white-space:nowrap;
         }
-
-        .publish-btn:hover { background:linear-gradient(135deg, var(--primary-dark) 0%, #d32f2f 100%); transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,59,48,0.3); }
-        .publish-btn:active { transform:translateY(0); }
-        .publish-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
-
-        .hint { color:var(--text-secondary); font-size:0.9rem; display:flex; align-items:center; gap:var(--spacing-sm); }
-        .hint i { color:var(--warning); }
-
-        .shares-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--spacing-lg); }
-
-        .empty-state { text-align:center; padding:var(--spacing-2xl); color:var(--text-tertiary); }
-        .empty-state i { font-size:4rem; margin-bottom:var(--spacing-lg); opacity:0.5; }
-        .empty-state p { font-size:1.2rem; margin-bottom:var(--spacing-sm); }
-
+        .publish-btn:hover:not(:disabled) { background:var(--primary-dark); transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,59,48,0.3); }
+        .publish-btn:disabled { opacity:0.6; cursor:not-allowed; }
+        .hint { color:var(--text-secondary); font-size:0.9rem; }
         .shares-list { display:grid; gap:var(--spacing-md); }
-
         .share-item {
             background:var(--surface-secondary); border-radius:var(--radius-md);
             padding:var(--spacing-lg); border:1px solid var(--border);
-            transition:all 0.2s ease; display:flex; justify-content:space-between; align-items:center; gap:var(--spacing-md);
+            display:flex; justify-content:space-between; align-items:center; gap:var(--spacing-md);
         }
-
-        .share-item:hover { background:var(--surface-tertiary); transform:translateX(4px); }
-
-        .share-content { flex:1; display:flex; flex-direction:column; gap:var(--spacing-xs); }
-
+        @media (max-width:768px) { .share-item { flex-direction:column; align-items:flex-start; } }
         .share-code { font-family:'Courier New', monospace; font-size:1.3rem; font-weight:600; word-break:break-all; }
-
-        .share-meta { display:flex; align-items:center; gap:var(--spacing-lg); color:var(--text-secondary); font-size:0.9rem; flex-wrap:wrap; }
-
-        .status-badge { display:inline-flex; align-items:center; gap:var(--spacing-xs); padding:var(--spacing-xs) var(--spacing-sm); border-radius:20px; font-size:0.85rem; font-weight:500; }
-
-        .status-pending { background:rgba(255,149,0,0.1); color:var(--warning); border:1px solid rgba(255,149,0,0.3); }
-        .status-copied { background:rgba(52,199,89,0.1); color:var(--success); border:1px solid rgba(52,199,89,0.3); }
-        .status-expired { background:rgba(142,142,147,0.1); color:var(--text-tertiary); border:1px solid rgba(142,142,147,0.3); }
-
+        .share-meta { color:var(--text-secondary); font-size:0.9rem; margin-top:var(--spacing-xs); }
+        .status-pending { color:var(--warning); font-weight:500; }
+        .status-copied { color:var(--success); font-weight:500; }
+        .status-expired { color:var(--text-tertiary); font-weight:500; }
         .copy-btn {
             padding:var(--spacing-md) var(--spacing-lg);
-            background:linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-            color:white; border:none; border-radius:var(--radius-sm);
-            font-weight:600; cursor:pointer; transition:all 0.2s ease;
-            display:flex; align-items:center; gap:var(--spacing-sm); white-space:nowrap;
+            background:var(--secondary); color:white; border:none; border-radius:var(--radius-sm);
+            font-weight:600; cursor:pointer; white-space:nowrap;
+            transition:all 0.2s ease;
         }
-
-        .copy-btn:hover:not(:disabled) { background:linear-gradient(135deg, var(--secondary-dark) 0%, #cc7700 100%); transform:translateY(-2px); box-shadow:0 4px 15px rgba(255,149,0,0.3); }
-        .copy-btn:active:not(:disabled) { transform:translateY(0); }
-        .copy-btn:disabled { background:var(--surface-tertiary); color:var(--text-tertiary); cursor:not-allowed; opacity:0.7; }
+        .copy-btn:hover:not(:disabled) { background:var(--secondary-dark); transform:translateY(-2px); }
+        .copy-btn:disabled { background:var(--surface-tertiary); color:var(--text-tertiary); cursor:not-allowed; }
         .copy-btn.copied { background:var(--success); }
-
+        .empty-state { text-align:center; padding:var(--spacing-2xl); color:var(--text-tertiary); }
+        .empty-state i { font-size:4rem; margin-bottom:var(--spacing-lg); opacity:0.5; }
         .footer { text-align:center; margin-top:var(--spacing-2xl); padding:var(--spacing-xl) 0; color:var(--text-secondary); font-size:0.9rem; border-top:1px solid var(--border); }
-
+        .connection-bar {
+            text-align:center; padding:var(--spacing-md); border-radius:var(--radius-md);
+            margin-bottom:var(--spacing-lg); font-weight:500;
+        }
+        .connection-ok { background:rgba(52,199,89,0.1); color:var(--success); }
+        .connection-err { background:rgba(255,59,48,0.1); color:var(--danger); }
         .toast {
             position:fixed; bottom:var(--spacing-xl); right:var(--spacing-xl);
-            background:var(--surface-primary); color:var(--text-primary);
-            padding:var(--spacing-lg) var(--spacing-xl); border-radius:var(--radius-md);
-            box-shadow:var(--shadow-hover); border-left:4px solid var(--success);
-            transform:translateY(100px); opacity:0; transition:all 0.3s ease;
-            z-index:1000; max-width:400px; display:flex; align-items:center; gap:var(--spacing-md);
+            background:var(--surface-primary); padding:var(--spacing-lg) var(--spacing-xl);
+            border-radius:var(--radius-md); box-shadow:var(--shadow-hover);
+            border-left:4px solid var(--success); z-index:1000; max-width:400px;
+            transition:all 0.3s ease; opacity:0; transform:translateY(100px);
         }
-
-        .toast.show { transform:translateY(0); opacity:1; }
+        .toast.show { opacity:1; transform:translateY(0); }
         .toast.error { border-left-color:var(--danger); }
-        .toast i { font-size:1.5rem; }
-        .toast.success i { color:var(--success); }
-        .toast.error i { color:var(--danger); }
-
-        .connection-status {
-            display:inline-flex; align-items:center; gap:var(--spacing-xs);
-            padding:var(--spacing-xs) var(--spacing-sm); border-radius:20px;
-            font-size:0.85rem; font-weight:500;
-        }
-
-        .connection-online { background:rgba(52,199,89,0.1); color:var(--success); }
-        .connection-offline { background:rgba(255,59,48,0.1); color:var(--danger); }
-
-        @media (max-width:768px) {
-            .container { padding:var(--spacing-md); }
-            .logo-text { font-size:2rem; }
-            .stat-value { font-size:2.5rem; }
-            .share-item { flex-direction:column; align-items:flex-start; gap:var(--spacing-md); }
-            .copy-btn { align-self:stretch; justify-content:center; }
-            .toast { left:var(--spacing-md); right:var(--spacing-md); max-width:none; }
-        }
-
-        @media (max-width:480px) {
-            .logo-text { font-size:1.8rem; }
-            .stat-card { padding:var(--spacing-lg); }
-            .publish-section, .shares-section { padding:var(--spacing-lg); }
-        }
+        @media (max-width:768px) { .toast { left:var(--spacing-md); right:var(--spacing-md); max-width:none; } }
     </style>
 </head>
 <body>
@@ -227,292 +143,187 @@
                 <i class="fas fa-gift logo-icon"></i>
                 <h1 class="logo-text">拼多多福袋分享</h1>
             </div>
-            <p class="tagline">分享你的福袋，让幸运传递。每个分享码仅限一人复制，24小时内有效。</p>
-            <p style="margin-top:var(--spacing-sm);">
-                <span class="connection-status connection-offline" id="connectionStatus">
-                    <i class="fas fa-circle" style="font-size:0.5rem;"></i> 连接中...
-                </span>
-            </p>
+            <p class="tagline">分享你的福袋，每个分享码仅限一人复制，24小时内有效</p>
         </header>
 
-        <div class="stats-container">
-            <div class="stat-card publish">
-                <i class="fas fa-paper-plane stat-icon"></i>
-                <div class="stat-value" id="publishedCount">0</div>
-                <div class="stat-label">今日发布分享码</div>
-            </div>
-            <div class="stat-card copied">
-                <i class="fas fa-copy stat-icon"></i>
-                <div class="stat-value" id="copiedCount">0</div>
-                <div class="stat-label">今日已复制</div>
-            </div>
-        </div>
+        <div class="connection-bar connection-err" id="connBar">连接中...</div>
 
         <section class="publish-section">
             <h2 class="section-title"><i class="fas fa-plus-circle"></i>发布新分享码</h2>
             <div class="input-group">
-                <input type="text" class="share-input" id="shareInput" placeholder="输入你的拼多多福袋分享码（如：ABC123XYZ）" maxlength="50">
-                <button class="publish-btn" id="publishBtn"><i class="fas fa-share-alt"></i>发布分享码</button>
+                <input type="text" class="share-input" id="shareInput" placeholder="输入拼多多福袋分享码" maxlength="50">
+                <button class="publish-btn" id="publishBtn">发布</button>
             </div>
-            <p class="hint"><i class="fas fa-info-circle"></i>分享码发布后24小时内有效，被复制后将标记为"已复制"</p>
+            <p class="hint">分享码发布后24小时内有效，仅限一人复制</p>
         </section>
 
         <section class="shares-section">
-            <div class="shares-header">
-                <h2 class="section-title"><i class="fas fa-list"></i>当前分享码列表</h2>
-                <span class="hint" id="lastUpdate">实时同步中</span>
-            </div>
+            <h2 class="section-title"><i class="fas fa-list"></i>当前分享码列表</h2>
             <div id="sharesList">
-                <div class="empty-state" id="emptyState">
-                    <i class="fas fa-inbox"></i>
-                    <p>暂无分享码</p>
-                    <p>发布第一个分享码，让幸运开始传递！</p>
-                </div>
+                <div class="empty-state"><i class="fas fa-inbox"></i><p>暂无分享码</p></div>
             </div>
         </section>
 
         <footer class="footer">
-            <p>拼多多福袋分享平台 &copy; 2025 | 数据实时同步，多人共享</p>
-            <p>每个分享码24小时内有效，每人仅限复制一次</p>
+            <p>拼多多福袋分享平台 | 实时同步，多人共享 | 2025</p>
         </footer>
     </div>
 
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">操作成功</span>
-    </div>
+    <div class="toast" id="toast"><span id="toastMsg"></span></div>
 
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-        import { getDatabase, ref, onValue, push, update, serverTimestamp, onDisconnect, set } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+    <!-- Firebase Compat SDK (namespaced) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
+    <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCWVH_Bt_gYKFa9KqxyNRaqNtNooqOmuhk",
             authDomain: "pdd-fortune-bag.firebaseapp.com",
+            databaseURL: "https://pdd-fortune-bag-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "pdd-fortune-bag",
             storageBucket: "pdd-fortune-bag.firebasestorage.app",
             messagingSenderId: "1076733344090",
             appId: "1:1076733344090:web:23ea8f1d399689dbf95b63"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const sharesRef = ref(db, 'shares');
-
+        const connBar = document.getElementById('connBar');
         const shareInput = document.getElementById('shareInput');
         const publishBtn = document.getElementById('publishBtn');
         const sharesList = document.getElementById('sharesList');
-        const emptyState = document.getElementById('emptyState');
-        const publishedCountEl = document.getElementById('publishedCount');
-        const copiedCountEl = document.getElementById('copiedCount');
-        const lastUpdateEl = document.getElementById('lastUpdate');
-        const connectionStatus = document.getElementById('connectionStatus');
         const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toastMessage');
+        const toastMsg = document.getElementById('toastMsg');
 
         let allShares = [];
-        let isConnected = false;
 
-        // 监听连接状态
-        const connectedRef = ref(db, '.info/connected');
-        onValue(connectedRef, (snap) => {
-            isConnected = snap.val() === true;
-            if (isConnected) {
-                connectionStatus.className = 'connection-status connection-online';
-                connectionStatus.innerHTML = '<i class="fas fa-circle" style="font-size:0.5rem;"></i> 已连接';
-                lastUpdateEl.textContent = '实时同步中';
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const sharesRef = db.ref('shares');
+
+        // 连接状态
+        db.ref('.info/connected').on('value', function(snap) {
+            if (snap.val() === true) {
+                connBar.className = 'connection-bar connection-ok';
+                connBar.textContent = '已连接 - 实时同步中';
             } else {
-                connectionStatus.className = 'connection-status connection-offline';
-                connectionStatus.innerHTML = '<i class="fas fa-circle" style="font-size:0.5rem;"></i> 连接断开';
-                lastUpdateEl.textContent = '连接断开，等待重连...';
+                connBar.className = 'connection-bar connection-err';
+                connBar.textContent = '连接断开，正在重连...';
             }
         });
 
-        // 实时监听分享码数据
-        onValue(sharesRef, (snapshot) => {
+        // 监听数据
+        sharesRef.on('value', function(snapshot) {
             const data = snapshot.val();
             allShares = data ? Object.entries(data).map(([id, val]) => ({ id, ...val })) : [];
-            checkAndUpdateExpired();
-            renderShares();
-            updateStats();
+            checkExpired();
+            render();
+        }, function(err) {
+            console.error('读取失败:', err);
+            connBar.className = 'connection-bar connection-err';
+            connBar.textContent = '数据读取失败: ' + err.message;
         });
 
-        // 检查并更新过期分享码
-        function checkAndUpdateExpired() {
+        function checkExpired() {
             const now = Date.now();
-            const updates = {};
-            let hasExpired = false;
-
-            allShares.forEach(share => {
-                if (share.status === 'pending' && share.expiresAt <= now) {
-                    updates[`${share.id}/status`] = 'expired';
-                    hasExpired = true;
+            var updates = {};
+            allShares.forEach(function(s) {
+                if (s.status === 'pending' && s.expiresAt <= now) {
+                    updates[s.id + '/status'] = 'expired';
                 }
             });
-
-            if (hasExpired) {
-                update(ref(db), updates);
-            }
+            if (Object.keys(updates).length > 0) db.ref('shares').update(updates);
         }
 
-        // 渲染分享码列表
-        function renderShares() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayShares = allShares.filter(s => {
-                const createdDay = new Date(s.createdAt).toISOString().split('T')[0];
-                return createdDay === today && s.status !== 'expired';
+        function render() {
+            var today = new Date().toISOString().split('T')[0];
+            var todayShares = allShares.filter(function(s) {
+                return new Date(s.createdAt).toISOString().split('T')[0] === today && s.status !== 'expired';
             });
 
             if (todayShares.length === 0) {
-                emptyState.style.display = 'block';
-                sharesList.innerHTML = '';
-                sharesList.appendChild(emptyState);
+                sharesList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>暂无分享码</p></div>';
                 return;
             }
 
-            emptyState.style.display = 'none';
-            todayShares.sort((a, b) => b.createdAt - a.createdAt);
+            todayShares.sort(function(a, b) { return b.createdAt - a.createdAt; });
 
-            const listHTML = todayShares.map(share => {
-                const createdAt = new Date(share.createdAt);
-                const expiresAt = new Date(share.expiresAt);
-                const now = Date.now();
-                const timeLeft = expiresAt - now;
-                const hoursLeft = Math.floor(timeLeft / 3600000);
-                const minutesLeft = Math.floor((timeLeft % 3600000) / 60000);
-                const timeLeftText = timeLeft > 0 ? `${hoursLeft}小时${minutesLeft}分钟后过期` : '已过期';
+            var html = '<div class="shares-list">';
+            todayShares.forEach(function(s) {
+                var expiresAt = new Date(s.expiresAt);
+                var timeLeft = expiresAt - Date.now();
+                var hoursLeft = Math.floor(timeLeft / 3600000);
+                var minsLeft = Math.floor((timeLeft % 3600000) / 60000);
+                var timeStr = timeLeft > 0 ? hoursLeft + 'h' + minsLeft + 'm后过期' : '已过期';
+                var statusHtml = s.status === 'pending' ? '<span class="status-pending">待复制</span>'
+                    : s.status === 'copied' ? '<span class="status-copied">已复制</span>'
+                    : '<span class="status-expired">已过期</span>';
+                var disabled = s.status !== 'pending';
+                var btnHtml = disabled
+                    ? (s.status === 'copied' ? '<button class="copy-btn copied" disabled>已复制</button>' : '<button class="copy-btn" disabled>已过期</button>')
+                    : '<button class="copy-btn" onclick="copyCode(\'' + s.id + '\')">复制</button>';
 
-                let statusBadge = '';
-                if (share.status === 'pending') {
-                    statusBadge = '<span class="status-badge status-pending"><i class="fas fa-clock"></i> 待复制</span>';
-                } else if (share.status === 'copied') {
-                    statusBadge = '<span class="status-badge status-copied"><i class="fas fa-check"></i> 已复制</span>';
-                } else {
-                    statusBadge = '<span class="status-badge status-expired"><i class="fas fa-hourglass-end"></i> 已过期</span>';
-                }
-
-                const copyDisabled = share.status !== 'pending';
-                let copyBtnText = '复制';
-                let copyBtnClass = '';
-                if (share.status === 'copied') {
-                    copyBtnText = '<i class="fas fa-check"></i> 已复制';
-                    copyBtnClass = 'copied';
-                } else if (share.status === 'expired') {
-                    copyBtnText = '已过期';
-                }
-
-                return `
-                    <div class="share-item">
-                        <div class="share-content">
-                            <div class="share-code">${escapeHtml(share.code)}</div>
-                            <div class="share-meta">
-                                ${statusBadge}
-                                <span><i class="far fa-clock"></i> ${formatTime(createdAt)}</span>
-                                <span><i class="fas fa-hourglass-half"></i> ${timeLeftText}</span>
-                            </div>
-                        </div>
-                        <button class="copy-btn ${copyBtnClass}" data-id="${share.id}" ${copyDisabled ? 'disabled' : ''}>
-                            ${copyBtnText}
-                        </button>
-                    </div>
-                `;
-            }).join('');
-
-            sharesList.innerHTML = listHTML;
-
-            document.querySelectorAll('.copy-btn:not([disabled])').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    copyShareCode(this.dataset.id);
-                });
+                html += '<div class="share-item">';
+                html += '<div><div class="share-code">' + escapeHtml(s.code) + '</div>';
+                html += '<div class="share-meta">' + statusHtml + ' | ' + timeStr + '</div></div>';
+                html += btnHtml;
+                html += '</div>';
             });
+            html += '</div>';
+            sharesList.innerHTML = html;
         }
 
-        // 更新统计
-        function updateStats() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayShares = allShares.filter(s => {
-                const createdDay = new Date(s.createdAt).toISOString().split('T')[0];
-                return createdDay === today;
-            });
-            const publishedCount = todayShares.length;
-            const copiedCount = todayShares.filter(s => s.status === 'copied').length;
-            publishedCountEl.textContent = publishedCount;
-            copiedCountEl.textContent = copiedCount;
-        }
-
-        // 发布分享码
-        async function publishShare() {
-            const code = shareInput.value.trim();
+        function publish() {
+            var code = shareInput.value.trim();
             if (!code) { showToast('请输入分享码', 'error'); return; }
-            if (code.length < 3) { showToast('分享码太短，请输入至少3个字符', 'error'); return; }
+            if (code.length < 2) { showToast('分享码太短', 'error'); return; }
 
             publishBtn.disabled = true;
-            publishBtn.innerHTML = '<span class="loading"></span> 发布中...';
+            publishBtn.textContent = '发布中...';
 
-            try {
-                const newShare = {
-                    code: code,
-                    status: 'pending',
-                    createdAt: Date.now(),
-                    expiresAt: Date.now() + 24 * 60 * 60 * 1000
-                };
-
-                await push(sharesRef, newShare);
+            sharesRef.push({
+                code: code,
+                status: 'pending',
+                createdAt: Date.now(),
+                expiresAt: Date.now() + 86400000
+            }).then(function() {
                 shareInput.value = '';
-                showToast(`分享码 "${code}" 发布成功！`);
-                shareInput.focus();
-            } catch (err) {
-                console.error('发布失败:', err);
-                showToast('发布失败，请检查网络连接', 'error');
-            } finally {
+                showToast('发布成功！');
+            }).catch(function(err) {
+                showToast('发布失败: ' + err.message, 'error');
+            }).finally(function() {
                 publishBtn.disabled = false;
-                publishBtn.innerHTML = '<i class="fas fa-share-alt"></i>发布分享码';
-            }
+                publishBtn.textContent = '发布';
+            });
         }
 
-        // 复制分享码
-        async function copyShareCode(shareId) {
-            const share = allShares.find(s => s.id === shareId);
-            if (!share || share.status !== 'pending') {
-                showToast('此分享码已不可复制', 'error');
-                return;
-            }
-
-            try {
-                await navigator.clipboard.writeText(share.code);
-                await update(ref(db, `shares/${shareId}`), { status: 'copied' });
-                showToast(`分享码 "${share.code}" 已复制到剪贴板！`);
-            } catch (err) {
-                console.error('复制失败:', err);
-                showToast('操作失败，请重试', 'error');
-            }
+        function copyCode(id) {
+            var share = allShares.find(function(s) { return s.id === id; });
+            if (!share || share.status !== 'pending') return;
+            navigator.clipboard.writeText(share.code).then(function() {
+                db.ref('shares/' + id).update({ status: 'copied' });
+                showToast('已复制到剪贴板！');
+            }).catch(function(err) {
+                showToast('复制失败: ' + err.message, 'error');
+            });
         }
 
-        function showToast(message, type = 'success') {
-            toastMessage.textContent = message;
-            toast.className = 'toast ' + type;
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        function formatTime(date) {
-            return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+        function showToast(msg, type) {
+            toastMsg.textContent = msg;
+            toast.className = 'toast' + (type === 'error' ? ' error' : '');
+            setTimeout(function() { toast.classList.add('show'); }, 10);
+            setTimeout(function() { toast.classList.remove('show'); }, 3000);
         }
 
         function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+            var d = document.createElement('div');
+            d.textContent = text;
+            return d.innerHTML;
         }
 
-        // 事件绑定
-        publishBtn.addEventListener('click', publishShare);
-        shareInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') publishShare(); });
-        shareInput.addEventListener('input', () => { publishBtn.disabled = !shareInput.value.trim(); });
-        publishBtn.disabled = true;
+        publishBtn.addEventListener('click', publish);
+        shareInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') publish(); });
 
-        // 定期检查过期
-        setInterval(checkAndUpdateExpired, 60000);
+        window.copyCode = copyCode;
+        setInterval(checkExpired, 60000);
     </script>
 </body>
 </html>
