@@ -12,6 +12,7 @@
             --secondary: #ff9500;
             --secondary-dark: #e68500;
             --success: #34c759;
+            --success-dark: #2db84d;
             --warning: #ff9500;
             --danger: #ff3b30;
             --text-primary: #1d1d1f;
@@ -68,23 +69,53 @@
         }
         .tagline { color:var(--text-secondary); font-size:1.1rem; max-width:600px; margin:0 auto; }
 
-        .publish-section, .shares-section {
+        .stats-container {
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+            gap:var(--spacing-md); margin-bottom:var(--spacing-2xl);
+        }
+        .stat-card {
+            background:var(--surface-primary); border-radius:var(--radius-lg);
+            padding:var(--spacing-lg); box-shadow:var(--shadow);
+            border:1px solid var(--border); text-align:center;
+            transition:transform 0.2s ease;
+        }
+        .stat-card:hover { transform:translateY(-2px); }
+        .stat-card.publish { border-top:4px solid var(--primary); }
+        .stat-card.used-today { border-top:4px solid var(--warning); }
+        .stat-card.used-total { border-top:4px solid var(--success); }
+        .stat-value { font-size:2.5rem; font-weight:700; line-height:1.2; }
+        .stat-label { color:var(--text-secondary); font-size:0.9rem; margin-top:var(--spacing-xs); }
+
+        .publish-section, .shares-section, .used-section {
             background:var(--surface-primary); border-radius:var(--radius-lg);
             padding:var(--spacing-xl); box-shadow:var(--shadow);
             margin-bottom:var(--spacing-2xl); border:1px solid var(--border);
         }
         .section-title { font-size:1.5rem; font-weight:600; margin-bottom:var(--spacing-lg); display:flex; align-items:center; gap:var(--spacing-sm); }
         .section-title i { color:var(--primary); }
+        .section-title .refresh-btn {
+            margin-left:auto; padding:var(--spacing-sm) var(--spacing-md);
+            background:var(--surface-secondary); color:var(--text-secondary);
+            border:1px solid var(--border); border-radius:var(--radius-sm);
+            cursor:pointer; font-size:0.9rem; transition:all 0.2s ease;
+            display:flex; align-items:center; gap:var(--spacing-xs);
+        }
+        .section-title .refresh-btn:hover { background:var(--surface-tertiary); color:var(--text-primary); }
+        .section-title .refresh-btn:active { transform:scale(0.95); }
+        .section-title .refresh-btn.spinning i { animation:spin 0.6s ease-in-out; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
         .input-group { display:flex; gap:var(--spacing-md); margin-bottom:var(--spacing-md); }
         @media (max-width:768px) { .input-group { flex-direction:column; } }
         .share-input {
             flex:1; padding:var(--spacing-lg); border:2px solid var(--border);
-            border-radius:var(--radius-md); font-size:1.1rem;
+            border-radius:var(--radius-md); font-size:1.1rem; letter-spacing:2px;
             background:var(--surface-primary); color:var(--text-primary);
             transition:all 0.2s ease;
         }
         .share-input:focus { outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(255,59,48,0.1); }
-        .share-input::placeholder { color:var(--text-tertiary); }
+        .share-input::placeholder { color:var(--text-tertiary); letter-spacing:0; }
+        .share-input.invalid { border-color:var(--danger); }
         .publish-btn {
             padding:var(--spacing-lg) var(--spacing-xl);
             background:var(--primary); color:white; border:none; border-radius:var(--radius-md);
@@ -94,6 +125,7 @@
         .publish-btn:hover:not(:disabled) { background:var(--primary-dark); transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,59,48,0.3); }
         .publish-btn:disabled { opacity:0.6; cursor:not-allowed; }
         .hint { color:var(--text-secondary); font-size:0.9rem; }
+
         .shares-list { display:grid; gap:var(--spacing-md); }
         .share-item {
             background:var(--surface-secondary); border-radius:var(--radius-md);
@@ -106,6 +138,10 @@
         .status-pending { color:var(--warning); font-weight:500; }
         .status-copied { color:var(--success); font-weight:500; }
         .status-expired { color:var(--text-tertiary); font-weight:500; }
+
+        .share-actions { display:flex; gap:var(--spacing-sm); flex-shrink:0; }
+        @media (max-width:768px) { .share-actions { align-self:stretch; } }
+
         .copy-btn {
             padding:var(--spacing-md) var(--spacing-lg);
             background:var(--secondary); color:white; border:none; border-radius:var(--radius-sm);
@@ -115,8 +151,35 @@
         .copy-btn:hover:not(:disabled) { background:var(--secondary-dark); transform:translateY(-2px); }
         .copy-btn:disabled { background:var(--surface-tertiary); color:var(--text-tertiary); cursor:not-allowed; }
         .copy-btn.copied { background:var(--success); }
+
+        .smart-btn {
+            padding:var(--spacing-md) var(--spacing-lg);
+            background:var(--success); color:white; border:none; border-radius:var(--radius-sm);
+            font-weight:600; cursor:pointer; white-space:nowrap;
+            transition:all 0.2s ease; position:relative; overflow:hidden;
+        }
+        .smart-btn:hover:not(:disabled) { background:var(--success-dark); transform:translateY(-2px); box-shadow:0 4px 15px rgba(52,199,89,0.4); }
+        .smart-btn:active:not(:disabled) { transform:scale(0.95); }
+        .smart-btn:disabled { background:var(--surface-tertiary); color:var(--text-tertiary); cursor:not-allowed; }
+        .smart-btn::after {
+            content:''; position:absolute; top:50%; left:50%; width:0; height:0;
+            border-radius:50%; background:rgba(255,255,255,0.3);
+            transform:translate(-50%, -50%); transition:width 0.6s, height 0.6s;
+        }
+        .smart-btn:active::after { width:300px; height:300px; }
+
         .empty-state { text-align:center; padding:var(--spacing-2xl); color:var(--text-tertiary); }
         .empty-state i { font-size:4rem; margin-bottom:var(--spacing-lg); opacity:0.5; }
+
+        .used-list { display:grid; gap:var(--spacing-sm); }
+        .used-item {
+            background:var(--surface-secondary); border-radius:var(--radius-sm);
+            padding:var(--spacing-md); border:1px solid var(--border);
+            display:flex; justify-content:space-between; align-items:center;
+        }
+        .used-code { font-family:'Courier New', monospace; font-weight:600; }
+        .used-time { color:var(--text-secondary); font-size:0.85rem; }
+
         .footer { text-align:center; margin-top:var(--spacing-2xl); padding:var(--spacing-xl) 0; color:var(--text-secondary); font-size:0.9rem; border-top:1px solid var(--border); }
         .connection-bar {
             text-align:center; padding:var(--spacing-md); border-radius:var(--radius-md);
@@ -148,19 +211,51 @@
 
         <div class="connection-bar connection-err" id="connBar">连接中...</div>
 
+        <div class="stats-container">
+            <div class="stat-card publish">
+                <div class="stat-value" id="publishedCount">0</div>
+                <div class="stat-label">今日发布分享码</div>
+            </div>
+            <div class="stat-card used-today">
+                <div class="stat-value" id="usedTodayCount">0</div>
+                <div class="stat-label">今日已使用</div>
+            </div>
+            <div class="stat-card used-total">
+                <div class="stat-value" id="usedTotalCount">0</div>
+                <div class="stat-label">总计已使用</div>
+            </div>
+        </div>
+
         <section class="publish-section">
             <h2 class="section-title"><i class="fas fa-plus-circle"></i>发布新分享码</h2>
             <div class="input-group">
-                <input type="text" class="share-input" id="shareInput" placeholder="输入拼多多福袋分享码" maxlength="50">
+                <input type="text" class="share-input" id="shareInput" placeholder="输入9位数字分享码" maxlength="9" inputmode="numeric" pattern="\d{9}">
                 <button class="publish-btn" id="publishBtn">发布</button>
             </div>
-            <p class="hint">分享码发布后24小时内有效，仅限一人复制</p>
+            <p class="hint">分享码必须是9位数字，发布后24小时内有效，仅限一人复制</p>
         </section>
 
         <section class="shares-section">
-            <h2 class="section-title"><i class="fas fa-list"></i>当前分享码列表</h2>
+            <h2 class="section-title">
+                <i class="fas fa-list"></i>当前分享码列表
+                <button class="refresh-btn" id="refreshBtn" onclick="manualRefresh()">
+                    <i class="fas fa-sync-alt"></i> 刷新
+                </button>
+            </h2>
             <div id="sharesList">
                 <div class="empty-state"><i class="fas fa-inbox"></i><p>暂无分享码</p></div>
+            </div>
+        </section>
+
+        <section class="used-section">
+            <h2 class="section-title">
+                <i class="fas fa-check-circle"></i>今日已使用的码
+                <button class="refresh-btn" id="refreshUsedBtn" onclick="manualRefresh()">
+                    <i class="fas fa-sync-alt"></i> 刷新
+                </button>
+            </h2>
+            <div id="usedList">
+                <div class="empty-state"><i class="fas fa-inbox"></i><p>今日暂无已使用的码</p></div>
             </div>
         </section>
 
@@ -171,7 +266,6 @@
 
     <div class="toast" id="toast"><span id="toastMsg"></span></div>
 
-    <!-- Firebase Compat SDK (namespaced) -->
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 
@@ -190,8 +284,12 @@
         const shareInput = document.getElementById('shareInput');
         const publishBtn = document.getElementById('publishBtn');
         const sharesList = document.getElementById('sharesList');
+        const usedList = document.getElementById('usedList');
         const toast = document.getElementById('toast');
         const toastMsg = document.getElementById('toastMsg');
+        const publishedCountEl = document.getElementById('publishedCount');
+        const usedTodayCountEl = document.getElementById('usedTodayCount');
+        const usedTotalCountEl = document.getElementById('usedTotalCount');
 
         let allShares = [];
 
@@ -199,7 +297,6 @@
         const db = firebase.database();
         const sharesRef = db.ref('shares');
 
-        // 连接状态
         db.ref('.info/connected').on('value', function(snap) {
             if (snap.val() === true) {
                 connBar.className = 'connection-bar connection-ok';
@@ -210,16 +307,15 @@
             }
         });
 
-        // 监听数据
         sharesRef.on('value', function(snapshot) {
             const data = snapshot.val();
-            allShares = data ? Object.entries(data).map(([id, val]) => ({ id, ...val })) : [];
+            allShares = data ? Object.entries(data).map(function(e) {
+                return { id: e[0], code: e[1].code, status: e[1].status, createdAt: e[1].createdAt, expiresAt: e[1].expiresAt };
+            }) : [];
             checkExpired();
-            render();
-        }, function(err) {
-            console.error('读取失败:', err);
-            connBar.className = 'connection-bar connection-err';
-            connBar.textContent = '数据读取失败: ' + err.message;
+            renderShares();
+            renderUsed();
+            updateStats();
         });
 
         function checkExpired() {
@@ -233,7 +329,7 @@
             if (Object.keys(updates).length > 0) db.ref('shares').update(updates);
         }
 
-        function render() {
+        function renderShares() {
             var today = new Date().toISOString().split('T')[0];
             var todayShares = allShares.filter(function(s) {
                 return new Date(s.createdAt).toISOString().split('T')[0] === today && s.status !== 'expired';
@@ -248,34 +344,94 @@
 
             var html = '<div class="shares-list">';
             todayShares.forEach(function(s) {
-                var expiresAt = new Date(s.expiresAt);
-                var timeLeft = expiresAt - Date.now();
-                var hoursLeft = Math.floor(timeLeft / 3600000);
-                var minsLeft = Math.floor((timeLeft % 3600000) / 60000);
-                var timeStr = timeLeft > 0 ? hoursLeft + 'h' + minsLeft + 'm后过期' : '已过期';
+                var timeLeft = s.expiresAt - Date.now();
+                var h = Math.floor(timeLeft / 3600000);
+                var m = Math.floor((timeLeft % 3600000) / 60000);
+                var timeStr = timeLeft > 0 ? h + 'h' + m + 'm后过期' : '已过期';
                 var statusHtml = s.status === 'pending' ? '<span class="status-pending">待复制</span>'
                     : s.status === 'copied' ? '<span class="status-copied">已复制</span>'
                     : '<span class="status-expired">已过期</span>';
                 var disabled = s.status !== 'pending';
-                var btnHtml = disabled
-                    ? (s.status === 'copied' ? '<button class="copy-btn copied" disabled>已复制</button>' : '<button class="copy-btn" disabled>已过期</button>')
-                    : '<button class="copy-btn" onclick="copyCode(\'' + s.id + '\')">复制</button>';
 
                 html += '<div class="share-item">';
-                html += '<div><div class="share-code">' + escapeHtml(s.code) + '</div>';
+                html += '<div><div class="share-code">' + s.code + '</div>';
                 html += '<div class="share-meta">' + statusHtml + ' | ' + timeStr + '</div></div>';
-                html += btnHtml;
-                html += '</div>';
+                html += '<div class="share-actions">';
+                if (disabled) {
+                    html += '<button class="smart-btn" disabled>智能直达</button>';
+                    html += '<button class="copy-btn copied" disabled>已复制</button>';
+                } else {
+                    html += '<button class="smart-btn" onclick="smartCopy(\'' + s.id + '\')">智能直达</button>';
+                    html += '<button class="copy-btn" onclick="copyCode(\'' + s.id + '\')">复制</button>';
+                }
+                html += '</div></div>';
             });
             html += '</div>';
             sharesList.innerHTML = html;
         }
 
+        function renderUsed() {
+            var today = new Date().toISOString().split('T')[0];
+            var todayUsed = allShares.filter(function(s) {
+                return new Date(s.createdAt).toISOString().split('T')[0] === today && s.status === 'copied';
+            });
+
+            if (todayUsed.length === 0) {
+                usedList.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>今日暂无已使用的码</p></div>';
+                return;
+            }
+
+            todayUsed.sort(function(a, b) { return b.createdAt - a.createdAt; });
+
+            var html = '<div class="used-list">';
+            todayUsed.forEach(function(s) {
+                var t = new Date(s.createdAt);
+                var timeStr = t.toLocaleTimeString('zh-CN', { hour:'2-digit', minute:'2-digit' });
+                html += '<div class="used-item">';
+                html += '<span class="used-code">' + s.code + '</span>';
+                html += '<span class="used-time">' + timeStr + '</span>';
+                html += '</div>';
+            });
+            html += '</div>';
+            usedList.innerHTML = html;
+        }
+
+        function updateStats() {
+            var today = new Date().toISOString().split('T')[0];
+            var todayShares = allShares.filter(function(s) {
+                return new Date(s.createdAt).toISOString().split('T')[0] === today;
+            });
+            publishedCountEl.textContent = todayShares.length;
+            usedTodayCountEl.textContent = todayShares.filter(function(s) { return s.status === 'copied'; }).length;
+            usedTotalCountEl.textContent = allShares.filter(function(s) { return s.status === 'copied'; }).length;
+        }
+
+        function isValidCode(code) {
+            return /^\d{9}$/.test(code);
+        }
+
+        shareInput.addEventListener('input', function() {
+            var val = this.value;
+            if (val.length > 0 && !/^\d*$/.test(val)) {
+                this.value = val.replace(/\D/g, '');
+            }
+            if (this.value.length > 0 && !isValidCode(this.value)) {
+                this.classList.add('invalid');
+            } else {
+                this.classList.remove('invalid');
+            }
+        });
+
         function publish() {
             var code = shareInput.value.trim();
             if (!code) { showToast('请输入分享码', 'error'); return; }
-            if (code.length < 2) { showToast('分享码太短', 'error'); return; }
-
+            if (!isValidCode(code)) {
+                showToast('分享码不规范', 'error');
+                shareInput.classList.add('invalid');
+                shareInput.focus();
+                return;
+            }
+            shareInput.classList.remove('invalid');
             publishBtn.disabled = true;
             publishBtn.textContent = '发布中...';
 
@@ -306,6 +462,26 @@
             });
         }
 
+        function smartCopy(id) {
+            var share = allShares.find(function(s) { return s.id === id; });
+            if (!share || share.status !== 'pending') return;
+            navigator.clipboard.writeText(share.code).then(function() {
+                db.ref('shares/' + id).update({ status: 'copied' });
+                showToast('智能直达：已复制 ' + share.code + ' 到剪贴板！');
+            }).catch(function(err) {
+                showToast('复制失败: ' + err.message, 'error');
+            });
+        }
+
+        function manualRefresh() {
+            var btns = document.querySelectorAll('.refresh-btn');
+            btns.forEach(function(b) { b.classList.add('spinning'); });
+            setTimeout(function() {
+                btns.forEach(function(b) { b.classList.remove('spinning'); });
+            }, 600);
+            showToast('已刷新');
+        }
+
         function showToast(msg, type) {
             toastMsg.textContent = msg;
             toast.className = 'toast' + (type === 'error' ? ' error' : '');
@@ -313,16 +489,12 @@
             setTimeout(function() { toast.classList.remove('show'); }, 3000);
         }
 
-        function escapeHtml(text) {
-            var d = document.createElement('div');
-            d.textContent = text;
-            return d.innerHTML;
-        }
-
         publishBtn.addEventListener('click', publish);
         shareInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') publish(); });
 
         window.copyCode = copyCode;
+        window.smartCopy = smartCopy;
+        window.manualRefresh = manualRefresh;
         setInterval(checkExpired, 60000);
     </script>
 </body>
